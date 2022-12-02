@@ -25,6 +25,9 @@ SECRET_KEY = 'django-insecure-ddik4j2rx-sb0*jje0k@$d#rmq#j5#ghh6g4du8te(72vt+=#p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://', 'http://localhost:1337', 'https://'
+]
 ALLOWED_HOSTS = ['*']
 
 
@@ -142,7 +145,9 @@ USE_TZ = True
 import os
 #STATIC_URL = 'static/'
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'sub_app','static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR/'static'
 ]

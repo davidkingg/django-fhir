@@ -12,6 +12,7 @@ RUN apt update
 
 # Set work directory
 WORKDIR /code
+RUN mkdir /staticfiles
 
 # Install dependencies
 COPY ./requirements.txt .
