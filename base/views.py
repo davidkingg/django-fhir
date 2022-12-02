@@ -80,12 +80,12 @@ def profile(request,pk):
 #     return HttpResponse(serializers.serialize('json', User.objects.all()), content_type='application/json')
 #     #return render(request , 'base/user_list.html',{'users':User.objects.all()})
 def userlist(request):
-    data=requests.get('http://localhost:8080/Patient')
+    data=requests.get('http://fhir-api:8080/Patient')
     return HttpResponse(json.dumps(data.json()),content_type="application/json")
     #return render(request , 'base/user_list.html',{'users':User.objects.all()})
 
 def patientlist(request):
-    data=requests.get('http://localhost:8080/Patient')
+    data=requests.get('http://fhir-api:8080/Patient')
     data=data.json()
     try:
         data = {'id':[x ['resource']['id'] for x in data['entry']]}
@@ -96,7 +96,7 @@ def patientlist(request):
 
 def patient_id(request):
     idd=request.GET['id']
-    data=requests.get('http://localhost:8080/Patient/'+idd)
+    data=requests.get('http://fhir-api:8080/Patient/'+idd)
     data=data.json()
     return HttpResponse(json.dumps(data),content_type="application/json")
     #return render(request , 'base/user_list.html',{'users':User.objects.all()})
@@ -104,7 +104,7 @@ def patient_id(request):
 def delete_patient(request):
     if request.method == 'POST':
         idd=request.POST['id']
-        data=requests.delete('http://localhost:8080/Patient/'+idd)
+        data=requests.delete('http://fhir-api:8080/Patient/'+idd)
         return HttpResponse('record deleted')
     else:
         return render(request, 'base/delete.html')        
@@ -125,7 +125,7 @@ def update(request):
             "name":[{"family":family_name,"given":first_name}],
             "telecom": [{"system":"phone","value":phone,"use":"home"}]
         }
-        data=requests.put('http://localhost:8080/Patient/'+idd,json = data)
+        data=requests.put('http://fhir-api:8080/Patient/'+idd,json = data)
         return HttpResponse('record updated')
     else:
         return render(request, 'base/update.html')
@@ -134,7 +134,7 @@ def update(request):
 def update_patient(request):
     if request.method == 'POST':
         idd = request.POST['id']
-        data=requests.get('http://localhost:8080/Patient/'+idd).json()
+        data=requests.get('http://fhir-api:8080/Patient/'+idd).json()
         if data["resourceType"]== "Patient":
             data={
                 "id":idd,
@@ -166,7 +166,7 @@ def add_patient(request):
             "name":[{"family":family_name,"given":first_name}],
             "telecom": [{"system":"phone","value":phone,"use":"home"}]
         }
-        data=requests.post('http://localhost:8080/Patient/',json = data)
+        data=requests.post('http://fhir-api:8080/Patient/',json = data)
         return HttpResponse('record added')
     else:
         return render(request, 'base/create.html') 
